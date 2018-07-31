@@ -1,0 +1,80 @@
+<!--
+This file defines the templates that are displayed on the task list page of the website
+
+@author Chami Lamelas
+-->
+
+<!-- This template displays the title of the task list page, the input area for adding new tasks, and
+loads the data into the task templates displaying each of the tasks' data -->
+<template name="taskPage">
+  {{#if currentUser}}
+    <strong>Create New Task:</strong>
+    <div class="input-group" style="width:30%">
+      <input class="form-control" type="text" id="js-name" placeholder="Enter task name">
+      <span class="input-group-btn">
+        <button class="btn btn-info" id="js-create" type="button">Create</button>
+      </span>
+    </div>
+    <br>
+    <strong>Choose Assignees:</strong>
+    <br>
+    <select id="js-assignees" multiple class="form-control">
+      {{#each usr in users}}
+        <option value="{{usr.username}}">{{usr.username}}</option>
+      {{/each}}
+    </select>
+    <br>
+  {{else}}
+    <div class="alert alert-warning" role="alert">
+      Log-in to create new tasks!
+    </div>
+  {{/if}}
+    <h3>Tasks <span class="badge badge-secondary">{{incompleteTaskCount}}</span></h3>
+    <input type="checkbox" id="js-hideCompleted"> Hide Completed Tasks
+    <br>
+    <button type="button" id="js-sort" class="btn btn-secondary btn-sm">{{getSort}}</button>
+    <ul>
+      {{#each t in getTasks}}
+        <li>{{> task t}}</li>
+      {{/each}}
+    </ul>
+</template>
+
+<!-- Template for displaying data for each task -->
+<template name="task">
+  {{this.name}}
+  {{#if isOwner}}
+    <br>
+    <input type="checkbox" id="js-private" checked="{{this.isPrivate}}"> Private
+  {{/if}}
+  {{#if canComplete}}
+    <br>
+    <input type="checkbox" id="js-done" checked="{{this.done}}"> Done
+  {{/if}}
+  {{#if isOwner}}
+    <br>
+    <button type="button" id="js-delete">&times;</button>
+  {{/if}}
+  {{#if hasAssignees}}
+    <br>
+    Assigned to:
+    <ul>
+      {{#each assigneeProfile in getAssigneesProfiles}}
+      {{#if isAssignee}}
+        <li><a href="myprofileHead">{{assigneeProfile.username}}</a></li>
+      {{else}}
+        <li><a href="/profiles/{{assigneeProfile._id}}">{{assigneeProfile.username}}</a></li>
+      {{/if}}
+      {{/each}}
+    </ul>
+  {{else}}
+    <br>
+  {{/if}}
+  <small>Created by <a href="{{getCreatorLink}}">{{this.username}}</a></small>
+  {{#if this.done}}
+    {{#if isOwner}}
+      <br>
+      <small>Marked as done by {{this.doneBy}} at {{this.doneAtIP}}</small>
+    {{/if}}
+  {{/if}}
+</template>

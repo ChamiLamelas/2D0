@@ -1,0 +1,27 @@
+<!--
+This file defines the templates that are displayed on the profile list page of the website.
+
+@author Chami Lamelas
+-->
+
+<!-- Template that displays title of profile list and loads the data into the profileBar templates
+displaying each of the profiles' data -->
+<template name="profileList">
+  <h3>Profile List <span class="badge badge-secondary">{{getNumProfiles}}</span></h3>
+  <button type="button" class="btn btn-secondary btn-sm" id="js-profileSort">{{getProfileSort}}</button>
+  <br>
+  <ul>
+    {{#each profile in getProfiles}}
+      <li>{{> profileBar curr=profile}}</li>
+    {{/each}}
+  </ul>
+</template>
+
+<!-- Template for displaying data for each profile in profile list -->
+<template name="profileBar">
+  {{#if isOwner}}
+    <a href="myprofileHead">{{curr.username}}</a>
+  {{else}}
+    <a href="/profiles/{{curr._id}}">{{curr.username}}</a>
+  {{/if}}
+</template>

@@ -1,0 +1,156 @@
+<!--
+This file defines the templates used on the logged-in user's profile and profile pages
+
+@author Chami Lamelas
+-->
+
+<!-- Template for the head of the my profile page. Loads data into myprofile template if possible. -->
+<template name="myprofileHead">
+  {{#if currentUser}}
+    {{> myprofile me=getProfile}}
+  {{else}}
+    <div class="alert alert-warning" role="alert">
+      Log-in to view your profile!
+    </div>
+  {{/if}}
+</template>
+
+<!-- Template for displaying and editing logged-in user's profile's data -->
+<template name="myprofile">
+  <h3>{{me.username}}, welcome to your profile!</h3>
+  <br>
+  Your profile is currently {{#if me.isPrivate}}private{{else}}public{{/if}}.
+  <button class="btn btn-sm btn-info" type="button" id="js-private">{{#if me.isPrivate}}Make Public{{else}}Make Private{{/if}}</button>
+  <br>
+  <br>
+  {{#if isEditing}}
+    Display Name: <input type="text" class="form-control" id="js-displayName" value="{{me.displayName}}" placeholder="enter a display name">
+  {{else}}
+    <strong>{{me.displayName}}'s Profile</strong>
+    <br>
+    <small>{{me.username}}</small>
+    <br><br>
+    <button class="btn btn-info btn-sm" type="button" id="js-edit">Edit Profile</button>
+    <br>
+  {{/if}}
+  <br>
+  Born on
+  {{#if isEditing}}
+    <input class="form-control" type="date" id="js-dob" value="{{me.dob}}">
+  {{else}}
+    {{me.dob}}.
+    <br>
+  {{/if}}
+  <br>
+  {{#if isEditing}}
+    Picture of Me: <input class="form-control" type="text" id="js-pfp" value="{{me.pfp}}" placeholder="enter image link">
+  {{else}}
+    <strong>Picture of Me:</strong>
+    <br>
+    <a href="{{me.pfp}}">
+      <img src="{{me.pfp}}" width="40%" class="img-thumbnail img-responsive" alt="Picture of {{me.username}}">
+    </a>
+    <br>
+  {{/if}}
+  <br>
+  <strong>About Me:</strong>
+  <br>
+  {{#if isEditing}}
+    <textarea class="form-control" id="js-bio" placeholder="Enter some of your interests" rows="15" cols="40" style="resize:none">{{me.bio}}</textarea>
+    <br>
+    <button class="btn btn-success btn-sm" type="button" id="js-update">Update</button>
+    <button class="btn btn-warning btn-sm" type="button" id="js-cancel">Cancel</button>
+  {{else}}
+    {{me.bio}}
+  {{/if}}
+  <br>
+  <br>
+  <strong>All Owned Tasks</strong>
+  <span class="badge badge-secondary">{{getNumTasks}}</span>
+  <br>
+  <button class="btn btn-secondary btn-sm" type="button" id="js-taskSort">{{getTaskSort}}</button>
+  <br>
+  <ul>
+    {{#each mytask in getMyTasks}}
+      <li><a href="/tasks/{{mytask._id}}">{{mytask.name}}</a></li>
+    {{/each}}
+  </ul>
+  <br>
+  <strong>All Assigned Tasks</strong>
+  <span class="badge badge-secondary">{{getNumAssignments}}</span>
+  <br>
+  <button class="btn btn-secondary btn-sm" type="button" id="js-assnSort">{{getAssnSort}}</button>
+  <br>
+  <ul>
+    {{#each assn in getMyAssignments}}
+      <li><a href="/tasks/{{assn._id}}">{{assn.name}}</a></li>
+    {{/each}}
+  </ul>
+  <br>
+  <strong>Chats </strong>
+  <span class="badge badge-secondary">{{getNumChats}}</span>
+  <button type="button" class="btn btn-primary btn-sm" id="js-addChat">{{getAddState}}</button>
+  {{#if isAdding}}
+    <br><br>
+    <select id="js-users" multiple class="form-control">
+      {{#each usr in users}}
+        <option value="{{usr.username}}">{{usr.username}}</option>
+      {{/each}}
+    </select>
+    <br>
+    <button type="button" class="btn btn-success btn-sm" id="js-makeChat">Make Chat</button>
+  {{/if}}
+  <br>
+  <ul>
+    {{#each chat in getChats}}
+      <li><a href="/chats/{{chat._id}}">{{chat.title}}</a></li>
+    {{/each}}
+  </ul>
+</template>
+
+<!-- Template for displaying the data of the various profiles on the website, different from logged-in user's profile -->
+<template name="profile">
+  {{#if this.isPrivate}}
+    <div class="alert alert-warning" role="alert">
+      {{this.username}} has a private profile.
+    </div>
+  {{else}}
+    <strong>{{this.displayName}}'s Profile</strong>
+    <br>
+    <small>{{this.username}}</small>
+    <br><br>
+    Born on {{this.dob}}.
+    <br><br>
+    <strong>Picture of Me:</strong>
+    <br>
+    <a href="{{this.pfp}}">
+      <img src="{{this.pfp}}" class="img-responsive img-thumbnail" width="40%" alt="Picture of {{this.username}}">
+    </a>
+    <br><br>
+    <strong>About Me:</strong>
+    <br>
+    {{this.bio}}
+  {{/if}}
+  <hr>
+  <strong>Owned Public Tasks</strong>
+  <span class="badge badge-secondary">{{getNumPublicTasks}}</span>
+  <br>
+  <button class="btn btn-secondary btn-sm" type="button" id="js-taskSort">{{getTaskSort}}</button>
+  <br>
+  <ul>
+    {{#each publicTask in getPublicTasks}}
+      <li><a href="/tasks/{{publicTask._id}}">{{publicTask.name}}</a></li>
+    {{/each}}
+  </ul>
+  <br>
+  <strong>Assigned Public Tasks</strong>
+  <span class="badge badge-secondary">{{getNumAssignments}}</span>
+  <br>
+  <button class="btn btn-secondary btn-sm" type="button" id="js-assnSort">{{getAssnSort}}</button>
+  <br>
+  <ul>
+    {{#each assn in getAssignments}}
+      <li><a href="/tasks/{{assn._id}}">{{assn.name}}</a></li>
+    {{/each}}
+  </ul>
+</template>

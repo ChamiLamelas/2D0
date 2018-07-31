@@ -1,0 +1,46 @@
+<!--
+This file defines the layout of all of the website's pages. The majority of the code is taken from a Bootstrap sample.
+
+@author Chami Lamelas & getbootstrap.com/components
+-->
+
+<template name="layout">
+	<div class="container">
+
+		<!-- Here is the standard Bootstrap code for a Navigation bar taken directly from getbootstrap.com/components -->
+		<nav class="navbar navbar-default">
+		  <div class="container-fluid">
+		    <!-- Brand and toggle get grouped for better mobile display -->
+		    <div class="navbar-header">
+		      <button type="button" class="navbar-toggle collapsed"
+			  			data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+		        <span class="sr-only">Toggle navigation</span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		      </button>
+					<!-- Defines the main page link that can be accessed by clicking the name of the website on the navigation bar -->
+		      <a class="navbar-brand" href="{{pathFor 'taskPage'}}">
+		      	2D0</a>
+		    </div>
+
+		    <!-- Collect the nav links, forms, and other content for toggling -->
+		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		      	<ul class="nav navbar-nav">
+							<!-- Defines the other links to be displayed in the navigation bar that is shown on all webpages -->
+							<li><a href="{{pathFor 'myprofileHead'}}">My Profile</a></li>
+							<li><a href="{{pathFor 'profileList'}}">Profile List</a></li>
+						</ul>
+			    <ul class="nav navbar-nav navbar-right">
+			            {{> loginButtons}} <!-- This adds the login system to the website in the form of a minor login dropdown menu to the navigation bar -->
+			    </ul>
+		    </div><!-- /.navbar-collapse -->
+
+		  </div><!-- /.container-fluid -->
+		</nav>
+
+		<!-- Here is where the actual content of the page gets inserted by the router! -->
+		{{> yield}}
+
+	</div>
+</template>

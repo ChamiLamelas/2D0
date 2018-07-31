@@ -1,0 +1,57 @@
+<!--
+This file defines the templates that are used on the chat pages.
+
+@author Chami Lamelas
+-->
+
+<!-- Template that displays all of the messages that have been sent in the chat and the input area to send a new message -->
+<template name="chat">
+  {{#if currentUser}}
+    <h1>
+      {{title}}
+      {{#if isOwner}}
+        <button type="button" class="btn btn-danger btn-sm" id="js-del" style="float:right">&times;</button>
+      {{/if}}
+    </h1>
+    <div class="input-group" style="width:30%">
+      <input class="form-control" type="text" id="js-msgLimit" placeholder="Limit is currently {{messageLimit}} (Total: {{messages.length}})">
+      <span class="input-group-btn">
+        <button class="btn btn-info" id="js-msgLimUpdate" type="button">Update</button>
+      </span>
+    </div>
+    <br>
+    <div id="js-chatBox" class="panel panel-default" style="overflow:auto; min-height:70vh; max-height:70vh;">
+      {{#each msg in getMessages}}
+        {{> message msg}}
+      {{/each}}
+    </div>
+    <div class="input-group">
+      <input class="form-control" type="text" id="js-newMsg" placeholder="Enter your message">
+      <span class="input-group-btn">
+        <button class="btn btn-info" id="js-addPic" type="button" style="border-radius:0">Attach Picture</button>
+      </span>
+      <span class="input-group-btn">
+        <button class="btn btn-success" id="js-send" type="button">Send</button>
+      </span>
+    </div>
+  {{else}}
+    <div class="alert alert-warning" role="alert">
+      Log-in to see this chat!
+    </div>
+  {{/if}}
+</template>
+
+<!-- Template that displays the data in each message -->
+<template name="message">
+  <strong>{{username}}</strong>
+  <br>
+  {{text}}
+  <br>
+  {{#if hasAttachedImg}}
+    <a href="{{imgSrc}}">
+      <img src="{{imgSrc}}" class="img-responsive img-thumbnail" width="30%" alt="Picture of {{text}}">
+    </a>
+    <br>
+  {{/if}}
+  <br>
+</template>
