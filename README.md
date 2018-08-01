@@ -51,7 +51,7 @@ interested more on the comparison between the two, see [this article](https://bl
 meteor add reactive-dict
 ```
 
-Disable autopublishing in the Meteor project so the Meteor publish and subscribe functions can be used properly to control the transfer of data.
+Disable autopublishing in the Meteor project so the Meteor publish and subscribe functions can be used properly. Publishing and Subscribing is how Meteor restricts which data is sent from the server and picked up by the client respectively. 
 
 ```
 meteor remove autopublish
