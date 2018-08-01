@@ -59,6 +59,10 @@ Template.chat.helpers({
   isOwner() {
     return Meteor.userId() == this.owner;
   },
+  // checks whether the logged-in user is authorized to view this chat
+  canViewChat() {
+    return Meteor.userId() == this.owner || (this.users && this.users.indexOf(Meteor.user().username) >= 0);
+  }
 });
 
 // These are the Chat Template's events functions; these functions are triggered by events in the "chat" template in chat.html

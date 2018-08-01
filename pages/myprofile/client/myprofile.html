@@ -10,7 +10,7 @@ This file defines the templates used on the logged-in user's profile and profile
     {{> myprofile me=getProfile}}
   {{else}}
     <div class="alert alert-warning" role="alert">
-      Log-in to view your profile!
+      <strong>Log-in</strong> to view and edit your profile!
     </div>
   {{/if}}
 </template>
@@ -89,9 +89,10 @@ This file defines the templates used on the logged-in user's profile and profile
   <br>
   <strong>Chats </strong>
   <span class="badge badge-secondary">{{getNumChats}}</span>
-  <button type="button" class="btn btn-primary btn-sm" id="js-addChat">{{getAddState}}</button>
   {{#if isAdding}}
+    <button type="button" class="btn btn-warning btn-sm" id="js-addChat">Cancel</button>
     <br><br>
+    <strong>Add Users to the Chat</strong>
     <select id="js-users" multiple class="form-control">
       {{#each usr in users}}
         <option value="{{usr.username}}">{{usr.username}}</option>
@@ -99,6 +100,9 @@ This file defines the templates used on the logged-in user's profile and profile
     </select>
     <br>
     <button type="button" class="btn btn-success btn-sm" id="js-makeChat">Make Chat</button>
+    <br>
+  {{else}}
+    <button type="button" class="btn btn-success btn-sm" id="js-addChat">+</button>
   {{/if}}
   <br>
   <ul>
@@ -110,6 +114,7 @@ This file defines the templates used on the logged-in user's profile and profile
 
 <!-- Template for displaying the data of the various profiles on the website, different from logged-in user's profile -->
 <template name="profile">
+  {{rerouteIfPossible}}
   {{#if this.isPrivate}}
     <div class="alert alert-warning" role="alert">
       {{this.username}} has a private profile.
@@ -131,7 +136,7 @@ This file defines the templates used on the logged-in user's profile and profile
     <br>
     {{this.bio}}
   {{/if}}
-  <hr>
+  <br><br>
   <strong>Owned Public Tasks</strong>
   <span class="badge badge-secondary">{{getNumPublicTasks}}</span>
   <br>

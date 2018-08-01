@@ -40,7 +40,6 @@ Template.taskPage.events({
   },
   // If the js-create button is clicked
   "click #js-create"(event, instance) {
-    console.log("hi");
     addNewTask(instance);
   },
   // If the js-hideCompleted button is clicked
@@ -132,6 +131,6 @@ Template.task.helpers({
   },
   // Gets the link of the creator of the task
   getCreatorLink() {
-    return "/profiles/" + Profiles.findOne({owner:this.owner})._id;
+    return "/profiles/" + Profiles.findOne({username:this.username})._id;
   }
 });

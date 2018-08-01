@@ -154,10 +154,6 @@ Template.myprofile.helpers({
   getNumChats() {
     return Chats.find().count();
   },
-  // Gets the state of the user adding a chat from the ui state ReactiveDict
-  getAddState() {
-    return Template.instance().uiState.get("addChat");
-  },
   // Checks the state of whether or not the user is adding a chat from the ui state ReactiveDict
   isAdding() {
     return Template.instance().uiState.get("addChat") == CANCEL_TXT;
@@ -174,6 +170,9 @@ variables.
 */
 Template.profile.onCreated(function() {
   Meteor.subscribe("publicTasks");
+  Meteor.subscribe("myprofile");
+  Meteor.subscribe("privateProfiles");
+  Meteor.subscribe("publicProfiles");
   this.uiState = new ReactiveDict();
   this.uiState.set("taskSort", NAME_TXT);
   this.uiState.set("assnSort", NAME_TXT);
@@ -202,18 +201,19 @@ Template.profile.events({
 });
 
 // Helper function that gets the tasks assigned to this profile sorted correctly using the provided instance
-function hGetAssignments(inst) {
+function hGetAssignments(inst, name) {
   let sortedTasks = [];
   let assignedTasks = [];
   if (inst.uiState.get("assnSort") == NAME_TXT) {
-    sortedTasks = Tasks.find({username:{$ne:this.username}}, {sort:{createdAt:-1}});
+    sortedTasks = Tasks.find({username:{$ne:name}}, {sort:{createdAt:-1}});
   }
   else {
-    sortedTasks = Tasks.find({username:{$ne:this.username}}, {sort:{name:1}});
+    sortedTasks = Tasks.find({username:{$ne:name}}, {sort:{name:1}});
   }
   sortedTasks.forEach((task)=>{
-    if (task.assignees != null && task.assignees.indexOf(this.username) >= 0)
+    if (task.assignees != null && task.assignees.indexOf(name) >= 0) {
       assignedTasks.push(task);
+    }
   });
   return assignedTasks;
 }
@@ -232,11 +232,11 @@ Template.profile.helpers({
   },
   // Gets the tasks assigned to this profile
   getAssignments() {
-    return hGetAssignments(Template.instance());
+    return hGetAssignments(Template.instance(), this.username);
   },
   // Gets the number of tasks assigned to this profile
   getNumAssignments() {
-    return hGetAssignments(Template.instance()).length;
+    return hGetAssignments(Template.instance(), this.username).length;
   },
   // Gets the state of this profile's task sort selection from the ui state ReactiveDict
   getTaskSort() {
@@ -245,5 +245,10 @@ Template.profile.helpers({
   // Gets the state of this profile's assignment sort selection from the ui state ReactiveDict
   getAssnSort() {
     return Template.instance().uiState.get("assnSort");
+  },
+  // Reroutes to the logged-in user's profile page if possible
+  rerouteIfPossible() {
+    if (Meteor.user() && Meteor.user().username == this.username)
+      Router.go("myprofileHead");
   }
 });

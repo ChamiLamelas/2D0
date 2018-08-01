@@ -12,7 +12,7 @@ loads the data into the task templates displaying each of the tasks' data -->
     <div class="input-group" style="width:30%">
       <input class="form-control" type="text" id="js-name" placeholder="Enter task name">
       <span class="input-group-btn">
-        <button class="btn btn-info" id="js-create" type="button">Create</button>
+        <button class="btn btn-success" id="js-create" type="button">Create</button>
       </span>
     </div>
     <br>
@@ -26,7 +26,7 @@ loads the data into the task templates displaying each of the tasks' data -->
     <br>
   {{else}}
     <div class="alert alert-warning" role="alert">
-      Log-in to create new tasks!
+      <strong>Log-in</strong> to create new tasks or help other users complete theirs!
     </div>
   {{/if}}
     <h3>Tasks <span class="badge badge-secondary">{{incompleteTaskCount}}</span></h3>
@@ -42,7 +42,7 @@ loads the data into the task templates displaying each of the tasks' data -->
 
 <!-- Template for displaying data for each task -->
 <template name="task">
-  {{this.name}}
+  <strong>{{this.name}}</strong>
   {{#if isOwner}}
     <br>
     <input type="checkbox" id="js-private" checked="{{this.isPrivate}}"> Private
@@ -53,7 +53,7 @@ loads the data into the task templates displaying each of the tasks' data -->
   {{/if}}
   {{#if isOwner}}
     <br>
-    <button type="button" id="js-delete">&times;</button>
+    <button type="button" class="btn btn-sm btn-danger" id="js-delete">&times;</button>
   {{/if}}
   {{#if hasAssignees}}
     <br>
