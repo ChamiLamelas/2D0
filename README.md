@@ -35,9 +35,7 @@ Once you have installed all of the prerequisite programs, you can begin the set-
 #### Setting up Meteor in the project folder.
 
 1) If your computer is running Windows, open Windows Powershell (you may need to run it as an administrator). If your computer is running OSX, open Terminal.
-
 2) Navigate to the project folder using whichever command line you are using and open the todo folder. If you are unfamiliar with Unix bash, see this [tutorial](https://www.tutorialspoint.com/unix/).
-
 3) Once you are in the todo folder of your project, follow these steps:
 
 Install meteor into this project using the following command:
@@ -47,7 +45,7 @@ meteor npm install
 ```
 
 Add the ReactiveDict package to the project. Using ReactiveDict is similar to using Session.get() and Session.set() where data is updated reactively to be used by the Templates. While there are advantages and disadvantages of using ReactiveDict over Session, the reason I used it was because ReactiveDict's scope is limited to the Template. Session variables are project global. If you are
-interested more on the comparison between the two, see [this  article](https://blog.meteor.com/the-meteor-chef-reactive-dict-reactive-vars-and-session-variables-971584515a27).
+interested more on the comparison between the two, see [this article](https://blog.meteor.com/the-meteor-chef-reactive-dict-reactive-vars-and-session-variables-971584515a27).
 
 ```
 meteor add reactive-dict
@@ -79,7 +77,7 @@ Every time you edit a file and save it in the editor, Meteor automatically updat
 
 If you ever need to wipe a collection, do so in the server start-up function. As of now, three helper functions for removing all Tasks, Profiles, and Chats from MongoDB have been defined. These can be run like so:
 
-server/startup.js
+*server/startup.js*
 ```
 // function that runs on server start-up
 Meteor.startup(function(){
@@ -112,6 +110,18 @@ Lastly, it is recommended to use the login/accounts system that comes with Meteo
 
 ## Acknowledgments
 
-* Meteor tutorial to-do app linked [here](https://www.meteor.com/tutorials/react/creating-an-app)
-* Bootstrap components [documentation](https://getbootstrap.com/docs/4.0/components/alerts/)
-* App Design 2018 Boot Camp as taught by Professor [Tim Hickey](http://www.cs.brandeis.edu/~tim/)
+* Meteor tutorial to-do app linked [here](https://www.meteor.com/tutorials/react/creating-an-app).
+* [PurpleBooth](https://github.com/PurpleBooth) for their README [template](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2).
+* App Design 2018 Boot Camp as taught by Professor [Tim Hickey](http://www.cs.brandeis.edu/~tim/).
+
+## Other Useful Sources (Especially when learning HTML/CSS/JS)
+
+* Bootstrap components [documentation](https://getbootstrap.com/docs/4.0/components/alerts/).
+* w3schools HTML [Tutorials](https://www.w3schools.com/html/default.asp).
+* w3schools CSS [Tutorials](https://www.w3schools.com/css/default.asp).
+* w3schools JS [Tutorials](https://www.w3schools.com/js/default.asp).
+* w3schools Bootstrap [Tutorials](https://www.w3schools.com/bootstrap/default.asp).
+* MongoDB Shell Commands [documentation](https://docs.mongodb.com/manual/reference/method/).
+* MongoDB Operators [documentation](https://docs.mongodb.com/manual/reference/operator/).
+* Meteor API [documentation](https://docs.meteor.com/).
+* JS Keycode [Info](http://keycode.info/).
