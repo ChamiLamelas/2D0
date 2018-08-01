@@ -124,4 +124,5 @@ Lastly, it is recommended to use the login/accounts system that comes with Meteo
 * MongoDB Shell Commands [documentation](https://docs.mongodb.com/manual/reference/method/).
 * MongoDB Operators [documentation](https://docs.mongodb.com/manual/reference/operator/).
 * Meteor API [documentation](https://docs.meteor.com/).
+* Blaze API [documentation](http://blazejs.org/index.html).
 * JS Keycode [Info](http://keycode.info/).

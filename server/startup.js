@@ -54,16 +54,17 @@ Task Constructor
 
 @params
 	aName - name for the Task
+	initPrivate - Task's initial private state
 	someAssignees - Task assignees
 */
-function Task(aName, someAssignees) {
+function Task(aName, initPrivate, someAssignees) {
   this.name = aName;
   this.createdAt = new Date();
   this.done = false;
 	this.doneBy = "";
 	this.doneAtIP = "";
 	this.assignees = someAssignees;
-	this.isPrivate = false;
+	this.isPrivate = initPrivate;
   this.owner = Meteor.userId();
   //this.email = Meteor.user().emails[0].address;
 	this.username = Meteor.user().username;
@@ -119,12 +120,13 @@ function Message(txt, img) {
 // Methods that perform CRUD operations on MongoDB collections. These methods are to be called in client-side code using Meteor.call() in order to edit server-side data.
 Meteor.methods({
 	// Creates a new Task with a name and assignees in the MongoDB collection
-	"tasks.insert"(newTaskName, newTaskAssignees) {
+	"tasks.insert"(newTaskName, newTaskIsPrivate, newTaskAssignees) {
 		if (Meteor.userId()) {
 			check(newTaskName, String);
+			check(newTaskIsPrivate, Boolean);
 			if (newTaskAssignees != null)
 				check(newTaskAssignees, [String]);
-			Tasks.insert(new Task(newTaskName, newTaskAssignees));
+			Tasks.insert(new Task(newTaskName, newTaskIsPrivate, newTaskAssignees));
 		}
 	},
 	// Deletes the Task with the target id from the MongoDB collection
@@ -156,7 +158,7 @@ Meteor.methods({
 			check(privateState, Boolean);
 			Tasks.update(targetId, {$set: {isPrivate: privateState}});
 			if (privateState)
-				Tasks.update(targetId, {$set: {assignees: []}});
+				Tasks.update(targetId, {$set: {assignees: null}});
 		}
 	},
 	// Updates the Profile with the target id from the MongoDB collection to be private or public

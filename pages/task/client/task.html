@@ -16,14 +16,19 @@ loads the data into the task templates displaying each of the tasks' data -->
       </span>
     </div>
     <br>
-    <strong>Choose Assignees:</strong>
+    <input type="checkbox" id="js-initPrivate" checked="{{isInitPrivate}}"> Task is Private
     <br>
-    <select id="js-assignees" multiple class="form-control">
-      {{#each usr in users}}
-        <option value="{{usr.username}}">{{usr.username}}</option>
-      {{/each}}
-    </select>
-    <br>
+    {{#unless isInitPrivate}}
+      <br>
+      <strong>Choose Assignees:</strong>
+      <br>
+      <select id="js-assignees" multiple class="form-control">
+        {{#each usr in users}}
+          <option value="{{usr.username}}">{{usr.username}}</option>
+        {{/each}}
+      </select>
+      <br>
+    {{/unless}}
   {{else}}
     <div class="alert alert-warning" role="alert">
       <strong>Log-in</strong> to create new tasks or help other users complete theirs!

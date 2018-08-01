@@ -11,6 +11,8 @@ variables.
 Template.taskPage.onCreated( function () {
   this.uiState = new ReactiveDict();
   this.uiState.set("sort", NAME_TXT);
+  this.uiState.set("initPrivate", true);
+  this.uiState.set("hideCompleted", false);
   Meteor.subscribe("mytasks");
   Meteor.subscribe("publicTasks");
   Meteor.subscribe("myprofile");
@@ -19,14 +21,15 @@ Template.taskPage.onCreated( function () {
 });
 
 /*
-Helper function that calls the functions that add the new Task created from the data extracted from the provided instance to the MongoDB "tasks"
-collection.
+Helper function that calls the functions that add the new Task created from the data extracted from the provided instance to the MongoDB
+"tasks" collection.
 */
 function addNewTask(instance) {
   const NAME = instance.$("#js-name").val();
   if (NAME != "") {
-    Meteor.call("tasks.insert", NAME, instance.$("#js-assignees").val());
+    Meteor.call("tasks.insert", NAME, instance.uiState.get("initPrivate"), instance.$("#js-assignees").val());
     instance.$("#js-name").val("");
+    instance.uiState.set("initPrivate", true);
     instance.$("#js-assignees").val("");
   }
 }
@@ -42,9 +45,13 @@ Template.taskPage.events({
   "click #js-create"(event, instance) {
     addNewTask(instance);
   },
-  // If the js-hideCompleted button is clicked
+  // If the js-hideCompleted checkbox is clicked
   "click #js-hideCompleted"(event, instance) {
     instance.uiState.set("hideCompleted", event.target.checked);
+  },
+  // If the js-initPrivate checkbox is clicked
+  "click #js-initPrivate"(event, instance) {
+    instance.uiState.set("initPrivate", event.target.checked);
   },
   // If the js-sort button is clicked
   "click #js-sort"(event, instance) {
@@ -84,6 +91,10 @@ Template.taskPage.helpers({
   // Gets the number of tasks that have not been done
   incompleteTaskCount() {
     return Tasks.find({done:false}).count();
+  },
+  // Checks whether or not the user has set the new Task to be created as initially private
+  isInitPrivate() {
+    return Template.instance().uiState.get("initPrivate");
   }
 });
 
