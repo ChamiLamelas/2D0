@@ -217,11 +217,6 @@ Meteor.methods({
 	}
 });
 
-/*
-Publishing and Subscribing is how Meteor restricts which data is sent from the server and picked up by the client respectively. In these functions, the server
-controls which data is sent to clients.
-*/
-
 // publishes the Tasks classified under "mytasks"
 Meteor.publish("mytasks", function() {
 	return Tasks.find({owner:this.userId});
