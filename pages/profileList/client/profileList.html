@@ -9,10 +9,10 @@ displaying each of the profiles' data -->
 <template name="profileList">
   <h3>Profile List <span class="badge badge-secondary">{{getNumProfiles}}</span></h3>
   <button type="button" class="btn btn-secondary btn-sm" id="js-profileSort">{{getProfileSort}}</button>
-  <br>
-  <ul>
+  <br><br>
+  <ul class="list-group">
     {{#each profile in getProfiles}}
-      <li>{{> profileBar curr=profile}}</li>
+      <li class="list-group-item">{{> profileBar curr=profile}}</li>
     {{/each}}
   </ul>
 </template>

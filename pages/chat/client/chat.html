@@ -20,7 +20,13 @@ This file defines the templates that are used on the chat pages.
           <button class="btn btn-info" id="js-msgLimUpdate" type="button">Update</button>
         </span>
       </div>
-      <br>
+      <small>
+        You can limit how many messages are displayed in the chat by entering a number above. The message limit is currently <strong>{{messageLimit}}</strong>, and if you wish to view all the messages
+        in the chat you must enter a limit that is at least <strong>{{messages.length}}</strong>, which is the currently the total number of messages in this chat. If you enter a number that is larger
+        than the total, all of the messages are returned. If you enter a number "n" as the limit, the "n" most recent messages would be returned. The idea behind this feature is to take less time
+        displaying the desired messages in the chat.
+      </small>
+      <br><br>
       <div id="js-chatBox" class="panel panel-default" style="overflow:auto; min-height:70vh; max-height:70vh;">
         {{#each msg in getMessages}}
           {{> message msg}}

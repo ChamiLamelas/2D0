@@ -27,6 +27,10 @@ loads the data into the task templates displaying each of the tasks' data -->
           <option value="{{usr.username}}">{{usr.username}}</option>
         {{/each}}
       </select>
+      <small>
+        Take note, by making a task public anyone with or without an account may see the task. Furthermore, if you make a task public and do not assign it any users, anyone with an account is able to
+        mark it as done. If you wish to restrict who can mark a task as done, you should assign users that you trust in the menu above. That way, only those users are able to mark the task as done.
+      </small>
       <br>
     {{/unless}}
   {{else}}
@@ -38,9 +42,10 @@ loads the data into the task templates displaying each of the tasks' data -->
     <input type="checkbox" id="js-hideCompleted"> Hide Completed Tasks
     <br>
     <button type="button" id="js-sort" class="btn btn-secondary btn-sm">{{getSort}}</button>
-    <ul>
+    <br><br>
+    <ul class="list-group">
       {{#each t in getTasks}}
-        <li>{{> task t}}</li>
+        <li class="list-group-item">{{> task t}}</li>
       {{/each}}
     </ul>
 </template>
@@ -63,12 +68,12 @@ loads the data into the task templates displaying each of the tasks' data -->
   {{#if hasAssignees}}
     <br>
     Assigned to:
-    <ul>
+    <ul class="list-group">
       {{#each assigneeProfile in getAssigneesProfiles}}
       {{#if isAssignee}}
-        <li><a href="myprofileHead">{{assigneeProfile.username}}</a></li>
+        <li class="list-group-item"><a href="myprofileHead">{{assigneeProfile.username}}</a></li>
       {{else}}
-        <li><a href="/profiles/{{assigneeProfile._id}}">{{assigneeProfile.username}}</a></li>
+        <li class="list-group-item"><a href="/profiles/{{assigneeProfile._id}}">{{assigneeProfile.username}}</a></li>
       {{/if}}
       {{/each}}
     </ul>

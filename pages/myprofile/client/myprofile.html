@@ -69,10 +69,10 @@ This file defines the templates used on the logged-in user's profile and profile
   <span class="badge badge-secondary">{{getNumTasks}}</span>
   <br>
   <button class="btn btn-secondary btn-sm" type="button" id="js-taskSort">{{getTaskSort}}</button>
-  <br>
-  <ul>
+  <br><br>
+  <ul class="list-group">
     {{#each mytask in getMyTasks}}
-      <li><a href="/tasks/{{mytask._id}}">{{mytask.name}}</a></li>
+      <li class="list-group-item"><a href="/tasks/{{mytask._id}}">{{mytask.name}}</a></li>
     {{/each}}
   </ul>
   <br>
@@ -80,10 +80,10 @@ This file defines the templates used on the logged-in user's profile and profile
   <span class="badge badge-secondary">{{getNumAssignments}}</span>
   <br>
   <button class="btn btn-secondary btn-sm" type="button" id="js-assnSort">{{getAssnSort}}</button>
-  <br>
-  <ul>
+  <br><br>
+  <ul class="list-group">
     {{#each assn in getMyAssignments}}
-      <li><a href="/tasks/{{assn._id}}">{{assn.name}}</a></li>
+      <li class="list-group-item"><a href="/tasks/{{assn._id}}">{{assn.name}}</a></li>
     {{/each}}
   </ul>
   <br>
@@ -104,10 +104,10 @@ This file defines the templates used on the logged-in user's profile and profile
   {{else}}
     <button type="button" class="btn btn-success btn-sm" id="js-addChat">+</button>
   {{/if}}
-  <br>
-  <ul>
+  <br><br>
+  <ul class="list-group">
     {{#each chat in getChats}}
-      <li><a href="/chats/{{chat._id}}">{{chat.title}}</a></li>
+      <li class="list-group-item"><a href="/chats/{{chat._id}}">{{chat.title}}</a></li>
     {{/each}}
   </ul>
 </template>
@@ -141,10 +141,10 @@ This file defines the templates used on the logged-in user's profile and profile
   <span class="badge badge-secondary">{{getNumPublicTasks}}</span>
   <br>
   <button class="btn btn-secondary btn-sm" type="button" id="js-taskSort">{{getTaskSort}}</button>
-  <br>
-  <ul>
+  <br><br>
+  <ul class="list-group">
     {{#each publicTask in getPublicTasks}}
-      <li><a href="/tasks/{{publicTask._id}}">{{publicTask.name}}</a></li>
+      <li class="list-group-item"><a href="/tasks/{{publicTask._id}}">{{publicTask.name}}</a></li>
     {{/each}}
   </ul>
   <br>
@@ -152,10 +152,10 @@ This file defines the templates used on the logged-in user's profile and profile
   <span class="badge badge-secondary">{{getNumAssignments}}</span>
   <br>
   <button class="btn btn-secondary btn-sm" type="button" id="js-assnSort">{{getAssnSort}}</button>
-  <br>
-  <ul>
+  <br><br>
+  <ul class="list-group">
     {{#each assn in getAssignments}}
-      <li><a href="/tasks/{{assn._id}}">{{assn.name}}</a></li>
+      <li class="list-group-item"><a href="/tasks/{{assn._id}}">{{assn.name}}</a></li>
     {{/each}}
   </ul>
 </template>

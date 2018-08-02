@@ -6,6 +6,9 @@ The encryption and any other security of these client to server requests is hand
 @author Chami Lamelas
 */
 
+// global variables
+const DEFAULT_LIMIT = 10;
+
 // function that runs on server start-up
 Meteor.startup(function(){
 	 // removeAllProfiles();
@@ -90,7 +93,7 @@ Chat Constructor
 function Chat(users) {
 	this.users = users;
 	this.messages = [];
-	this.messageLimit = 10;
+	this.messageLimit = DEFAULT_LIMIT;
 	this.lastUsed = new Date();
 	this.owner = Meteor.userId();
 	var prof = Profiles.findOne({owner:Meteor.userId()});
@@ -217,17 +220,20 @@ Meteor.methods({
 	}
 });
 
-// publishes the Tasks classified under "mytasks"
+// publishes the Tasks that are owned by the logged-in user
 Meteor.publish("mytasks", function() {
 	return Tasks.find({owner:this.userId});
 });
 
-// publishes the Tasks classified under "publicTasks"
+/*
+publishes all public tasks. based on the assigned/ownership system of displaying task data on profiles where a user cannot both own and be assigned to a task, the profiles' helper functions
+distinguish which of these profiles apply to the profile's owner.
+*/
 Meteor.publish("publicTasks", function() {
-	return Tasks.find({isPrivate:false, owner:{$ne:this.userId}}, {fields:{doneBy:0, doneAtIP:0}});
+	return Tasks.find({isPrivate:false}, {fields:{doneBy:0, doneAtIP:0}});
 });
 
-// publishes the Profile classified under "myprofile"
+// publishes the Profile that is owned by the logged-in user
 Meteor.publish("myprofile", function() {
 	if (this.userId) {
 		if (!Profiles.findOne({owner:this.userId}))
@@ -237,17 +243,17 @@ Meteor.publish("myprofile", function() {
 	return undefined;
 });
 
-// publishes the Profiles classified under "privateProfiles"
+// publishes data for private profiles
 Meteor.publish("privateProfiles", function() {
 	return Profiles.find({owner: {$ne:this.userId}, isPrivate:true}, {fields:{username:1, isPrivate:1}});
 });
 
-// publishes the Profiles classified under "publicProfiles"
+// publishes data for public profiles
 Meteor.publish("publicProfiles", function() {
 	return Profiles.find({owner: {$ne:this.userId}, isPrivate:false});
 });
 
-// publishes the Chats classified under "chats"
+// publishes the chats that the logged-in user owns or is a user of 
 Meteor.publish("chats", function() {
 	if (this.userId) {
 		var username = Meteor.users.findOne(this.userId).username;
